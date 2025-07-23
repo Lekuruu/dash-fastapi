@@ -84,8 +84,6 @@ SITE_NAME : str
 FROM_EMAIL : str
     Will appear as the sender for emails sent via the SendGrid
     API.
-SENDGRID_API_KEY : str
-    Required for sending emails via the SendGrid API.
 EMAIL_WHITELIST : list
     List of email domains to accept. If set to an empty list
     or `None` then dash will assume all email domains are
@@ -93,15 +91,29 @@ EMAIL_WHITELIST : list
 MAX_ACCOUNT_EMAIL : int
     Number of accounts which can be tied to a single email
     address.
+EMAIL_PROVIDER : str
+    The email provider to use. Can be either 'mailgun', 'sendgrid'
+    or 'smtp'. If set to an empty string or `None` then dash
+    will disable email activation entirely. Depending on which
+    provider you choose, you will need to enter the required
+    authentication credentials below.
 
 .. SendGrid registration:
     https://signup.sendgrid.com/
 """
 SITE_NAME = 'Houdini'
 FROM_EMAIL = 'noreply@houdi.ni'
-SENDGRID_API_KEY = ''
-EMAIL_WHITELIST = ['gmail.com', 'hotmail.com', 'icloud.com', 'yahoo.com', 'aol.com']
 MAX_ACCOUNT_EMAIL = 5
+EMAIL_WHITELIST = ['gmail.com', 'hotmail.com', 'icloud.com', 'yahoo.com', 'aol.com']
+EMAIL_PROVIDER = ''
+
+MAILGUN_API_KEY = ''
+SENDGRID_API_KEY = ''
+
+SMTP_HOST = ''
+SMTP_PORT = 587
+SMTP_USERNAME = ''
+SMTP_PASSWORD = ''
 
 """
 Cryptography
