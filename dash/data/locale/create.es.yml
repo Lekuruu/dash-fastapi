@@ -1,0 +1,20 @@
+es:
+  terms: Debes seguir las reglas y los términos de uso.
+  name_missing: Debes escoger un nombre para tu pingüino.
+  name_short: El nombre de tu pingüino es muy corto.
+  name_number: Los nombres de usuario sólo pueden tener 5 números.
+  name_letter: Los nombres de usuario deben tener por lo menos 1 letra.
+  name_not_allowed: Ese nombre de usuario no está permitido.
+  name_taken: Ese nombre de usuario ya ha sido escogido.
+  name_suggest: Ese nombre de usuario ya ha sido escogido. Intenta éste %{suggestion}.
+  vanilla_name_suggest: Ese nombre de usuario ya ha sido escogido. Intenta éste
+  passwords_match: Las contraseñas no coinciden.
+  password_short: La contraseña es muy corta.
+  email_invalid: El correo eléctronico esta incorrecto.
+  balloon: el globo
+  cheese: el queso
+  igloo: el iglú
+  pizza: la pizza
+  popcorn: las palomitas
+  watermelon: la sandía
+  captcha_invalid: respuesta incorrecta
