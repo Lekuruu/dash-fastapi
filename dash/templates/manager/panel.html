@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/manager/static/css/style.css">
+        <link rel="icon" type="image/jpeg" href="">
+        <title>Houdini | Panel</title>
+    </head>
+    <body>
+      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown hidden-md-down">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Profile
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item">Logged in as <strong> {{ penguin.username }}</strong></a>
+                <a href="/manager/password" class="dropdown-item">Change Password</a>
+                <a href="/manager/email" class="dropdown-item">Change Email</a>
+                <a href="/manager/logout" class="dropdown-item">
+                  <div class="dropdown-divider"></div>
+                  Logout
+                </a>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </nav>
+      {% if success_message != '' %}
+        <div class="alert alert-success" role="alert">{{ success_message }}</div>
+        {% endif %}
+        {% if error_message != '' %}
+        <div class="alert alert-danger" role="alert">{{ error_message }}</div>
+        {% endif %}
+        <br>
+        <div class="container text-center d-flex justify-content-center">
+        <h3>Welcome back, {{ penguin.username }}</h3>
+      </div>
+      <br>
+      <div class="container text-center d-flex justify-content-center">
+        <a href="/manager/verify/en">
+          <button class="btn btn-success mr-1">
+            <h6 class='card-text text-center'>Verify Usernames</h6>
+          </button>
+        </a>
+        <a href="/manager/manage">
+          <button class="btn btn-success mr-1">
+            <h6 class='card-text text-center'>Manage Players</h6>
+          </button>
+        </a>
+      </div>
+      <br>
+      <div class="container text-center d-flex justify-content-center"> 
+        <h4> Your Login History </h4>
+      </div>
+      <div class="container text-center d-flex justify-content-center"> 
+        <table class="table table-bordered" style='width: 30vw;'>
+          <thead>
+            <tr>
+              <th scope="col" style='font-size: 90%;'>Date:</th>
+              <th scope="col" style='font-size: 90%;'>IP Hash</th>
+              <th scope="col" style='font-size: 90%;'>Minutes Played:</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for login in login_history %}
+            <tr>
+              <th scope="row" style='font-size: 90%;'>{{ login.date }}</th>
+              <th scope="row" style='font-size: 80%;'>{{ login.ip_hash }}</th>
+              <th scope="row" style='font-size: 90%;'>{{ login.minutes_played }}</th>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    </body>
+</html>
