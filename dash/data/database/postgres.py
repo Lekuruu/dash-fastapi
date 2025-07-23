@@ -51,8 +51,8 @@ class Postgres:
 
     @contextmanager
     def session(self):
+        session = self.sessionmaker(bind=self.engine)
         try:
-            session = self.sessionmaker(bind=self.engine)
             yield session
         except Exception as e:
             self.logger.fatal(f'Transaction failed: {e}', exc_info=e)
