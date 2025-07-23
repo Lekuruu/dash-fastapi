@@ -31,4 +31,4 @@
   </a>
 </p>
 
-<p align="center">A server for Houdini web-services, rewritten in modern FastAPI</p>
+<p align="center">A work-in-progress server for Houdini web-services, rewritten in modern FastAPI</p>
