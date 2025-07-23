@@ -119,6 +119,29 @@ class Penguin(Base):
     rejection_de = Column(Boolean, nullable=False, server_default=text("false"))
     rejection_ru = Column(Boolean, nullable=False, server_default=text("false"))
 
+class ActivationKey(Base):
+    __tablename__ = 'activation_key'
+
+    penguin_id = Column(
+        ForeignKey('penguin.id', ondelete='CASCADE', onupdate='CASCADE'),
+        primary_key=True,
+        nullable=False
+    )
+    activation_key = Column(
+        CHAR(255),
+        primary_key=True,
+        nullable=False
+    )
+
+class Login(Base):
+    __tablename__ = 'login'
+
+    id = Column(Integer, primary_key=True, server_default=text("nextval('\"login_id_seq\"'::regclass)"))
+    penguin_id = Column(ForeignKey('penguin.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
+    date = Column(DateTime, nullable=False, server_default=text("now()"))
+    ip_hash = Column(CHAR(255), nullable=False)
+    minutes_played = Column(Integer, nullable=False, server_default=text("0"))
+
 class Card(Base):
     __tablename__ = 'card'
 
