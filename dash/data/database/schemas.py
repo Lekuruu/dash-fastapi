@@ -16,6 +16,7 @@ from sqlalchemy import (
     Column,
     String,
     Date,
+    Text,
     Time,
     CHAR
 )
@@ -141,6 +142,17 @@ class Login(Base):
     date = Column(DateTime, nullable=False, server_default=text("now()"))
     ip_hash = Column(CHAR(255), nullable=False)
     minutes_played = Column(Integer, nullable=False, server_default=text("0"))
+
+class Ban(Base):
+    __tablename__ = 'ban'
+
+    penguin_id = Column(ForeignKey('penguin.id', ondelete='CASCADE', onupdate='CASCADE'), primary_key=True, nullable=False)
+    issued = Column(DateTime, primary_key=True, nullable=False, server_default=text("now()"))
+    expires = Column(DateTime, primary_key=True, nullable=False, server_default=text("now()"))
+    moderator_id = Column(ForeignKey('penguin.id', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    reason = Column(SmallInteger, nullable=False)
+    comment = Column(Text)
+    message = Column(Text)
 
 class Card(Base):
     __tablename__ = 'card'
