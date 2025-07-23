@@ -1,9 +1,6 @@
 
-import importlib
 import argparse
-import logging
 import uvicorn
-import dash
 import os
 
 def main() -> None:
@@ -19,7 +16,7 @@ def main() -> None:
     os.environ['DASH_PORT'] = f'{args.port}'
 
     uvicorn.run(
-        dash.server.api,
+        'dash.server:api',
         host=args.address,
         port=args.port,
         reload=args.reload,
