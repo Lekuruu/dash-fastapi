@@ -3,11 +3,12 @@ from __future__ import annotations
 from sqlalchemy.orm import Session
 from typing import Any, Iterable
 from dash.data import Postgres
+from types import ModuleType
 from importlib import util
 from redis import Redis
 
 state_database: Postgres | None = None
-state_config: object | None = None
+state_config: ModuleType | None = None
 state_redis: Redis | None = None
 
 def redis() -> Redis | None:
@@ -21,7 +22,8 @@ def database_session() -> Iterable[Session]:
     with state_database.session() as session:
         yield session
 
-def config() -> object | None:
+def config() -> ModuleType:
+    assert state_config is not None, "Config not initialized"
     return state_config
 
 def config_value(key: str, default: Any = None) -> Any:
