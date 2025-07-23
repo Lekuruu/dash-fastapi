@@ -367,3 +367,14 @@ class PenguinItem(Base):
     def __init__(self, penguin_id: int, item_id: int):
         self.penguin_id = penguin_id
         self.item_id = item_id
+
+class PenguinPostcard(Base):
+    __tablename__ = 'penguin_postcard'
+
+    id = Column(Integer, primary_key=True, server_default=text("nextval('\"penguin_postcard_id_seq\"'::regclass)"))
+    penguin_id = Column(ForeignKey('penguin.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False, index=True)
+    sender_id = Column(ForeignKey('penguin.id', ondelete='CASCADE', onupdate='CASCADE'), index=True)
+    postcard_id = Column(ForeignKey('postcard.id', ondelete='CASCADE', onupdate='CASCADE'), nullable=False)
+    send_date = Column(DateTime, nullable=False, server_default=text("now()"))
+    details = Column(String(255), nullable=False, server_default=text("''::character varying"))
+    has_read = Column(Boolean, nullable=False, server_default=text("false"))
