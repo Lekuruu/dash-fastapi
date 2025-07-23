@@ -35,7 +35,11 @@ __all__ = [
     'CoverItem',
     'PenguinStamp',
     'Item',
-    'PenguinItem'
+    'PenguinItem',
+    'PenguinPostcard',
+    'ActivationKey',
+    'Login',
+    'Ban'
 ]
 
 class Penguin(Base):
