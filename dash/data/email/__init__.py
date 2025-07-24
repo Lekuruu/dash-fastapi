@@ -7,7 +7,8 @@ from types import ModuleType
 VALID_PROVIDERS = (
     'smtp',
     'sendgrid',
-    'mailgun'
+    'mailgun',
+    'debug'
 )
 
 def send(
