@@ -28,5 +28,5 @@ def snfgenerator(
         return SNFResponse(hasError=True, error="Invalid token")
 
     session_token = token_hex(16)
-    redis.setex(f'{penguin.id}.session', 60, session_token)
+    redis.setex(f'{penguin.id}.mpsession', 60, session_token)
     return SNFResponse(data=session_token)
