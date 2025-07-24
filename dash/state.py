@@ -3,6 +3,7 @@ from __future__ import annotations
 from sqlalchemy.orm import Session
 from typing import Any, Iterable
 from dash.data import Postgres
+from requests import Session
 from types import ModuleType
 from importlib import util
 from dash import logging
@@ -10,12 +11,19 @@ from redis import Redis
 
 state_database: Postgres | None = None
 state_config: ModuleType | None = None
+state_requests: Session | None = None
 state_redis: Redis | None = None
 
+def requests() -> Session:
+    assert state_requests is not None, "Requests session not initialized"
+    return state_requests
+
 def redis() -> Redis | None:
+    assert state_redis is not None, "Redis not initialized"
     return state_redis
 
 def database() -> Postgres | None:
+    assert state_database is not None, "Database not initialized"
     return state_database
 
 def database_session() -> Iterable[Session]:
@@ -36,9 +44,9 @@ def config_set_value(key: str, value: Any) -> None:
     setattr(state_config, key, value)
 
 def initialize(config_file: str) -> None:
-    global state_database, state_config, state_redis
+    global state_database, state_config, state_redis, state_requests
     
-    was_initialized = any([state_database, state_config, state_redis])
+    was_initialized = any([state_database, state_config, state_redis, state_requests])
     assert not was_initialized, "State already initialized"
 
     config_spec = util.spec_from_file_location("config", config_file)
@@ -62,11 +70,19 @@ def initialize(config_file: str) -> None:
         decode_responses=True
     )
 
+    state_requests = Session()
+    state_requests.headers.update({
+        "User-Agent": f"Dash/{state_config.SITE_NAME}"
+    })
+
 def on_shutdown() -> None:
-    global state_database, state_config, state_redis
+    global state_database, state_config, state_redis, state_requests
 
     if state_redis:
         state_redis.close()
+
+    if state_requests:
+        state_requests.close()
 
 def setup_logging() -> None:
     logging.basicConfig(
