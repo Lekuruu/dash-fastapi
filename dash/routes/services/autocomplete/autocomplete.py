@@ -14,7 +14,7 @@ autocomplete_models = {
     'pt': AutoComplete(words=load(open(f'{models_directory}/pt.json', 'r')))
 }
 
-@router.post("/")
+@router.post("/autocomplete")
 def complete(
     request: Request,
     language: str = Query("en"),

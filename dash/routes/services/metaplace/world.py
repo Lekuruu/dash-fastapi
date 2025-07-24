@@ -9,13 +9,13 @@ from dash import state
 allowed_products = ["cjsnow"]
 router = APIRouter()
 
-@router.get("/")
+@router.get("/swrequest")
 def start_world_request(
     request: Request,
     token: str = Query(...),
+    owner: int = Query(...),
     product_name: str = Query(...),
     world_name: str = Query(..., alias="name"),
-    owner: str = Query(..., alias="pid"),
     redis: Redis = Depends(state.redis),
     config: ModuleType = Depends(state.config)
 ) -> PlainTextResponse:
