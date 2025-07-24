@@ -35,4 +35,4 @@ def legacy_activation(
         )
 
     activations.delete(activation_key, database)
-    return RedirectResponse(config.LEGACY_ACTIVATE_REDIRECT)
+    return RedirectResponse(config.LEGACY_ACTIVATE_REDIRECT, status_code=302)

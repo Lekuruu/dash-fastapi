@@ -89,7 +89,7 @@ def vanilla_activation(
         )
 
     activations.delete(activation_key, database)
-    return RedirectResponse(config.VANILLA_ACTIVATE_REDIRECT)
+    return RedirectResponse(config.VANILLA_ACTIVATE_REDIRECT, status_code=302)
 
 def validate_recaptcha(recaptcha_response: str | None, config: ModuleType) -> bool:
     if not config.GSECRET_KEY:
