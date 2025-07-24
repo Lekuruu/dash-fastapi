@@ -80,8 +80,7 @@ def initialize(config_file: str) -> None:
     state_redis = Redis(
         host=state_config.REDIS_ADDRESS,
         port=state_config.REDIS_PORT,
-        db=0,
-        decode_responses=True
+        db=0
     )
 
     state_requests = Session()
