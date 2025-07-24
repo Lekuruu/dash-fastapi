@@ -42,7 +42,7 @@ def vanilla_activation_autofill(
         activation_key=code
     )
 
-@router.post("/{language}")
+@router.post("/{language}/")
 def vanilla_activation(
     request: Request,
     language: Language,
@@ -58,7 +58,7 @@ def vanilla_activation(
             detail=i18n.t("activate.captcha_invalid", locale=language.value)
         )
 
-    if not (penguin := penguins.fetch_by_name(username, database)):
+    if not (penguin := penguins.fetch_by_name_case_insensitive(username, database)):
         raise HTTPException(
             status_code=404,
             detail=i18n.t("activate.username_404", locale=language.value)
