@@ -33,8 +33,9 @@ class Postgres:
             autocommit=False,
             expire_on_commit=False
         )
-        self.logger = getLogger('postgres')
         Base.metadata.create_all(bind=self.engine)
+        self.logger = getLogger('postgres')
+        self.ignored_exceptions = ('HTTPException', 'StarletteHTTPException')
 
     @staticmethod
     def create_database_url(
@@ -55,6 +56,11 @@ class Postgres:
         try:
             yield session
         except Exception as e:
+            exception_name = e.__class__.__name__
+
+            if exception_name in self.ignored_exceptions:
+                raise e
+
             self.logger.fatal(f'Transaction failed: {e}', exc_info=e)
             self.logger.fatal('Performing rollback...')
             session.rollback()
