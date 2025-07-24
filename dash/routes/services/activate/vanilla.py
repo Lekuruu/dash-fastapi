@@ -58,7 +58,7 @@ def vanilla_activation(
             detail=i18n.t("activate.captcha_invalid", locale=language.value)
         )
 
-    if not (penguin := penguins.fetch_by_name_case_insensitive(username, database)):
+    if not (penguin := penguins.fetch_by_name(username.lower(), database)):
         raise HTTPException(
             status_code=404,
             detail=i18n.t("activate.username_404", locale=language.value)
