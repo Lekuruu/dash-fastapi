@@ -1,7 +1,7 @@
 
+from .responses import SNFResponse
 from dash.data.repositories import penguins
 from dash import state
-from .models import SNFResponse
 
 from fastapi import APIRouter, Request, Form, Depends
 from fastapi.responses import JSONResponse
