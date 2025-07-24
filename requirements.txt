@@ -13,3 +13,4 @@ pillow==11.3.0
 python-i18n==0.3.9
 websockets==15.0.1
 stegano==2.0.0
+python-multipart==0.0.20
