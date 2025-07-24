@@ -5,6 +5,7 @@ from typing import Any, Iterable
 from dash.data import Postgres
 from types import ModuleType
 from importlib import util
+from dash import logging
 from redis import Redis
 
 state_database: Postgres | None = None
@@ -66,3 +67,10 @@ def on_shutdown() -> None:
 
     if state_redis:
         state_redis.close()
+
+def setup_logging() -> None:
+    logging.basicConfig(
+        format='[%(asctime)s] - <%(name)s> %(levelname)s: %(message)s',
+        handlers=[logging.Console],
+        level=logging.INFO
+    )

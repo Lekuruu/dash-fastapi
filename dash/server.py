@@ -1,22 +1,17 @@
 
 from dash.routes import router as BaseRouter
 from contextlib import asynccontextmanager
-from dash import state, logging
 from fastapi import FastAPI
+from dash import state
 
 import warnings
 import os
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logging.basicConfig(
-        format='[%(asctime)s] - <%(name)s> %(levelname)s: %(message)s',
-        handlers=[logging.Console],
-        level=logging.INFO
-    )
-
     config_path = os.environ.get('DASH_CONFIG', 'config.py')
     state.initialize(config_path)
+    state.setup_logging()
     yield
     state.on_shutdown()
 
