@@ -29,11 +29,11 @@ def fetch_one(
 
 @session_wrapper
 def delete(
-    penguin_id: int,
+    activation_key: str,
     session: Session = ...
 ) -> bool:
     deleted_rows = session.query(ActivationKey) \
-        .filter(ActivationKey.penguin_id == penguin_id) \
+        .filter(ActivationKey.activation_key == activation_key) \
         .delete()
     session.commit()
     return deleted_rows > 0
