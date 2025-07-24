@@ -2,17 +2,30 @@
 from __future__ import annotations
 from sqlalchemy.orm import Session
 from typing import Any, Iterable
+from functools import lru_cache
 from dash.data import Postgres
 from requests import Session
 from types import ModuleType
-from importlib import util
 from dash import logging
 from redis import Redis
 
+import importlib
+import jinja2
+
+state_jinja2: jinja2.Environment | None = None
 state_database: Postgres | None = None
 state_config: ModuleType | None = None
 state_requests: Session | None = None
 state_redis: Redis | None = None
+
+def jinja2_environment() -> jinja2.Environment:
+    assert state_jinja2 is not None, "Jinja2 environment not initialized"
+    return state_jinja2
+
+@lru_cache(maxsize=128)
+def jinja2_template(name: str) -> jinja2.Template:
+    assert state_jinja2 is not None, "Jinja2 environment not initialized"
+    return state_jinja2.get_template(name)
 
 def requests() -> Session:
     assert state_requests is not None, "Requests session not initialized"
@@ -44,15 +57,15 @@ def config_set_value(key: str, value: Any) -> None:
     setattr(state_config, key, value)
 
 def initialize(config_file: str) -> None:
-    global state_database, state_config, state_redis, state_requests
-    
-    was_initialized = any([state_database, state_config, state_redis, state_requests])
+    global state_database, state_config, state_redis, state_requests, state_jinja2
+
+    was_initialized = any([state_database, state_config, state_redis, state_requests, state_jinja2])
     assert not was_initialized, "State already initialized"
 
-    config_spec = util.spec_from_file_location("config", config_file)
+    config_spec = importlib.util.spec_from_file_location("config", config_file)
     assert config_spec is not None, f"Config file {config_file} not found"
 
-    config_module = util.module_from_spec(config_spec)
+    config_module = importlib.util.module_from_spec(config_spec)
     config_spec.loader.exec_module(config_module)
     state_config = config_module
 
@@ -63,6 +76,7 @@ def initialize(config_file: str) -> None:
         state_config.POSTGRES_HOST,
         state_config.POSTGRES_PORT
     )
+
     state_redis = Redis(
         host=state_config.REDIS_ADDRESS,
         port=state_config.REDIS_PORT,
@@ -75,8 +89,13 @@ def initialize(config_file: str) -> None:
         "User-Agent": f"Dash/{state_config.SITE_NAME}"
     })
 
+    state_jinja2 = jinja2.Environment(
+        loader=jinja2.FileSystemLoader('dash/templates'),
+        autoescape=jinja2.select_autoescape(['html', 'xml'])
+    )
+
 def on_shutdown() -> None:
-    global state_database, state_config, state_redis, state_requests
+    global state_redis, state_requests
 
     if state_redis:
         state_redis.close()
