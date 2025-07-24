@@ -9,7 +9,7 @@ from dash import state
 allowed_products = ["cjsnow"]
 router = APIRouter()
 
-@router.get("/swrequest")
+@router.get("/")
 def start_world_request(
     request: Request,
     token: str = Query(...),

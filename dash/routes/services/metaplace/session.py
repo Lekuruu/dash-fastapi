@@ -11,7 +11,7 @@ from redis import Redis
 
 router = APIRouter()
 
-@router.post('/session', response_class=JSONResponse)
+@router.post("/", response_class=JSONResponse)
 def snfgenerator(
     request: Request,
     token: str = Form(...),
