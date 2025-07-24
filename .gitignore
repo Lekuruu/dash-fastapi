@@ -250,4 +250,4 @@ pyrightconfig.json
 # Application-specific files
 config.py
 .env
-items/
+items
