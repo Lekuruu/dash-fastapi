@@ -53,7 +53,7 @@ def resolve_email_provider() -> ModuleType | None:
     """Resolve the email provider module based on the app configuration."""
     try:
         config = state.config()
-        module = import_module(f'dash.mail.{config.EMAIL_PROVIDER}')
+        module = import_module(f'dash.data.email.{config.EMAIL_PROVIDER}')
 
         if not hasattr(module, 'send'):
             logger.error(f'Provider {config.EMAIL_PROVIDER} does not have a send method.')
