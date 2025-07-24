@@ -1,7 +1,8 @@
 
 from fastapi import HTTPException, Request, APIRouter, Depends, Form
-from fastapi.responses import RedirectResponse
+from fastapi.responses import RedirectResponse, HTMLResponse
 from sqlalchemy.orm import Session
+from jinja2 import Template
 from types import ModuleType
 
 from dash.data.repositories import activations, penguins
@@ -11,6 +12,36 @@ from dash import state
 import i18n
 
 router = APIRouter()
+
+@router.get("/{language}", response_class=HTMLResponse)
+def vanilla_activation_page(
+    request: Request,
+    language: Language,
+    config: ModuleType = Depends(state.config)
+) -> str:
+    register_template = state.jinja2_template(
+        f'activate/{language.value}.html'
+    )
+    return register_template.render(
+        vanilla_play_link=config.VANILLA_PLAY_LINK,
+        site_key=config.GSITE_KEY
+    )
+
+@router.get("/{language}/{code}", response_class=HTMLResponse)
+def vanilla_activation_autofill(
+    code: str,
+    request: Request,
+    language: Language,
+    config: ModuleType = Depends(state.config)
+) -> str:
+    register_template = state.jinja2_template(
+        f'activate/{language.value}.html'
+    )
+    return register_template.render(
+        vanilla_play_link=config.VANILLA_PLAY_LINK,
+        site_key=config.GSITE_KEY,
+        activation_key=code
+    )
 
 @router.post("/{language}")
 def vanilla_activation(
