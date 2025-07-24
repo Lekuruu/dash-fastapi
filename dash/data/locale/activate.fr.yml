@@ -4,3 +4,4 @@ fr:
   incorrect_username: Ce nom d'utilisateur ne correspond pas à la clé d'activation.
   activation_key_404: Clé d'activation introuvable.
   error: Une erreur s'est produite, veuillez réessayer.
+  captcha_invalid: Votre score de captcha était faible; veuillez réessayer.

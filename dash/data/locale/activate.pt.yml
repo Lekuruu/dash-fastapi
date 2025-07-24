@@ -4,3 +4,4 @@ pt:
   incorrect_username: Este nome de usuário não corresponde à chave de ativação.
   activation_key_404: Chave de ativação não encontrada.
   error: Ocorreu um erro. Por favor, tente novamente.
+  captcha_invalid: Sua pontuação de captcha foi baixa; por favor, tente novamente.

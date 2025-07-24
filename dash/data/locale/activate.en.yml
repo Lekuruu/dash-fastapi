@@ -4,3 +4,4 @@ en:
   incorrect_username: This username does not match the activation key.
   activation_key_404: Activation key not found.
   error: An error occured, please try again.
+  captcha_invalid: Your captcha score was low, please try again.
