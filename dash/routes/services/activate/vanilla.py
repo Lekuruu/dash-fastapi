@@ -2,7 +2,6 @@
 from fastapi import HTTPException, Request, APIRouter, Depends, Form
 from fastapi.responses import RedirectResponse, HTMLResponse
 from sqlalchemy.orm import Session
-from jinja2 import Template
 from types import ModuleType
 
 from dash.data.repositories import activations, penguins
