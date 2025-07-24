@@ -12,7 +12,7 @@ requests.headers.update({
 EMAIL_DOMAIN = config.FROM_EMAIL.split('@')[-1]
 MAILGUN_URL = environ.get('MAILGUN_URL', 'api.eu.mailgun.net')
 
-def mailgun(subject: str, message: str, email: str) -> Response:
+def send(subject: str, message: str, email: str) -> Response:
     response = requests.post(
         f'https://{MAILGUN_URL}/v3/{config.EMAIL_DOMAIN}/messages',
         auth=('api', config.MAILGUN_API_KEY),
